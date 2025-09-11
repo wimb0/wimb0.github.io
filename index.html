@@ -3,71 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wimbo.nl</title>
+    <title>Wimbo.nl - Tijdelijk Offline</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --background-start: #0D1117;
+            --background-end: #161B22;
+            --text-primary: #E6EDF3;
+            --text-secondary: #AABAC8;
+            --accent-border: rgba(255, 255, 255, 0.1);
+            --glass-background: rgba(22, 27, 34, 0.7);
+        }
+
         body, html {
             height: 100%;
             margin: 0;
-            /* Het lettertype is hier aangepast naar een standaard monospace font */
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            background: var(--background-end);
+            background: linear-gradient(135deg, var(--background-start), var(--background-end));
+            overflow: hidden;
+        }
+
+        .main-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #E0E0E0; /* Lichtgrijze tekstkleur */
-            background: #1a1a2e; /* Donkere basiskleur */
-            background: linear-gradient(to bottom, #1a1a2e, #16213e, #0f3460); /* Verticaal verloop */
-            background-size: 100% 100%; /* Zorgt ervoor dat het verloop de hele pagina bedekt */
-            animation: gradientShift 15s ease infinite; /* Subtiele animatie op het verloop */
+            height: 100%;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
         }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 0% 100%; }
-            100% { background-position: 0% 0%; }
-        }
-
-        .container {
+        .content-box {
             text-align: center;
-            padding: 40px;
-            background-color: rgba(0, 0, 0, 0.4); /* Licht doorschijnende achtergrond voor de tekst */
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); /* Neon-achtige gloed */
-            animation: fadeIn 2s ease-out; /* Fade-in animatie voor het bericht */
-            max-width: 80%; /* Zorgt ervoor dat het op kleinere schermen goed past */
+            padding: 50px;
+            max-width: 650px;
+            width: 100%;
+            background: var(--glass-background);
+            border: 1px solid var(--accent-border);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInBox 1s 0.2s forwards ease-out;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        
+        @keyframes fadeInBox {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h1 {
-            font-size: 2.8em;
-            margin-bottom: 15px;
-            color: #00FFFF; /* Helder cyaan voor de titel */
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* Extra gloed voor de titel */
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            letter-spacing: -1px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 2.2rem;
+            background-color: var(--text-primary);
+            margin-left: 8px;
+            vertical-align: middle;
+            animation: blink 1s steps(2, start) infinite;
+        }
+
+        @keyframes blink {
+            to {
+                visibility: hidden;
+            }
         }
 
         p {
-            font-size: 1.1em;
-            line-height: 1.6;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin: 10px 0 0 0;
+        }
+        
+        /* --- NIEUWE SECTIE VOOR DE LINKS --- */
+        .links-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 25px; /* Ruimte tussen de iconen */
         }
 
-        /* Responsive aanpassingen voor kleinere schermen */
+        .links-container a {
+            color: var(--text-secondary);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .links-container a:hover {
+            color: var(--text-primary);
+            transform: scale(1.1); /* Icoon wordt iets groter bij hover */
+        }
+        
+        .links-container svg {
+            width: 28px;
+            height: 28px;
+            fill: currentColor; /* SVG neemt de kleur van de 'a' tag over */
+        }
+        /* --- EINDE NIEUWE SECTIE --- */
+
         @media (max-width: 600px) {
             h1 {
-                font-size: 2em;
+                font-size: 1.8rem;
             }
-            .container {
-                padding: 25px;
+            .cursor {
+                height: 1.6rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+            .content-box {
+                padding: 30px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>wimbo.nl is offline</h1>
+    <div class="main-container">
+        <div class="content-box">
+            <h1>wimbo.nl is tijdelijk offline<span class="cursor"></span></h1>
+            <p>Er wordt achter de schermen gewerkt aan een update. We zijn snel weer terug.</p>
+
+            <div class="links-container">
+                <a href="https://github.com/wimb0/home-assistant-saj-r5-modbus" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <svg viewBox="0 0 16 16" role="img" aria-hidden="true">
+                        <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.19.01-.82.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21-.15.46-.55.38A8.013 8.013 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/wimb0/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                        <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 114.75 6.5 1.75 1.75 0 016.5 8.25zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"></path>
+                    </svg>
+                </a>
+            </div>
+
+        </div>
     </div>
 
 </body>
