@@ -3,32 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wimbo.nl - Tijdelijk Offline</title>
+    <title>Wimbo.nl</title>
     <style>
         body, html {
             height: 100%;
             margin: 0;
-            font-family: Arial, sans-serif;
+            /* Het lettertype is hier aangepast naar een standaard monospace font */
+            font-family: 'Courier New', Courier, monospace;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #f0f0f0; /* Lichte tekstkleur */
-            background: #232526;  /* Fallback voor oudere browsers */
-            background: -webkit-linear-gradient(to right, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            color: #E0E0E0; /* Lichtgrijze tekstkleur */
+            background: #1a1a2e; /* Donkere basiskleur */
+            background: linear-gradient(to bottom, #1a1a2e, #16213e, #0f3460); /* Verticaal verloop */
+            background-size: 100% 100%; /* Zorgt ervoor dat het verloop de hele pagina bedekt */
+            animation: gradientShift 15s ease infinite; /* Subtiele animatie op het verloop */
         }
 
-        .message {
+        @keyframes gradientShift {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 0% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        .container {
             text-align: center;
-            font-size: 1.5em; /* Maakt de tekst iets groter */
-            padding: 20px;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.4); /* Licht doorschijnende achtergrond voor de tekst */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); /* Neon-achtige gloed */
+            animation: fadeIn 2s ease-out; /* Fade-in animatie voor het bericht */
+            max-width: 80%; /* Zorgt ervoor dat het op kleinere schermen goed past */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            color: #00FFFF; /* Helder cyaan voor de titel */
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* Extra gloed voor de titel */
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        /* Responsive aanpassingen voor kleinere schermen */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            .container {
+                padding: 25px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="message">
-        <h1>wimbo.nl is tijdelijk offline</h1>
+    <div class="container">
+        <h1>wimbo.nl is offline</h1>
     </div>
 
 </body>
