@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="wimbo.nl">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50' y='1em' font-size='90' text-anchor='middle'>🙂</text></svg>">
     <title>wimbo.nl</title>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50' y='1em' font-size='90' text-anchor='middle'>✅</text></svg>">
+    
     <style>
+        /* // --- CSS VARIABLES (THEME) --- // */
         :root {
             --background-start: #0D1117;
             --background-end: #161B22;
@@ -16,12 +19,12 @@
             --glass-background: rgba(22, 27, 34, 0.7);
         }
 
+        /* // --- GENERAL & LAYOUT --- // */
         body, html {
             height: 100%;
             margin: 0;
             font-family: 'Courier New', Courier, monospace;
             color: var(--text-primary);
-            background: var(--background-end);
             background: linear-gradient(135deg, var(--background-start), var(--background-end));
             overflow: hidden;
         }
@@ -32,8 +35,6 @@
             justify-content: center;
             height: 100%;
             padding: 20px;
-            position: relative;
-            z-index: 1;
         }
 
         .content-box {
@@ -44,42 +45,17 @@
             background: var(--glass-background);
             border: 1px solid var(--accent-border);
             border-radius: 12px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInBox 1s 0.2s forwards ease-out;
-        }
-        
-        @keyframes fadeInBox {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* For Safari */
         }
 
+        /* // --- TYPOGRAPHY & TEXT ELEMENTS --- // */
         h1 {
             font-size: 2.5rem;
             font-weight: 700;
             margin: 0 0 15px 0;
             letter-spacing: -1px;
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 2px;
-            height: 2.2rem;
-            background-color: var(--text-primary);
-            margin-left: 8px;
-            vertical-align: middle;
-            animation: blink 1s steps(2, start) infinite;
-        }
-
-        @keyframes blink {
-            to {
-                visibility: hidden;
-            }
         }
 
         p {
@@ -88,11 +64,11 @@
             color: var(--text-secondary);
             margin: 10px 0 0 0;
         }
-        
+
         .text-links {
             margin-top: 30px;
+            display: inline-block; /* Adjust box to content width */
             text-align: left;
-            display: inline-block;
         }
         
         .text-links p {
@@ -109,6 +85,53 @@
             text-decoration: underline;
         }
 
+        /* // --- INTERACTIVE & DYNAMIC ELEMENTS --- // */
+        .big-emoji-container {
+            margin: 20px 0;
+        }
+
+        .big-emoji {
+            font-size: 3.5rem;
+            cursor: help; /* Cursor style on hover */
+            user-select: none; /* Prevents text selection */
+            transition: transform 0.2s ease;
+        }
+
+        .big-emoji:hover {
+            transform: scale(1.15); /* Slightly larger zoom on hover */
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 2.2rem;
+            background-color: var(--text-primary);
+            margin-left: 8px;
+            vertical-align: middle;
+            animation: blink 1s steps(2, start) infinite;
+        }
+
+        /* // --- ANIMATIONS --- // */
+        .content-box {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInBox 1s 0.2s forwards ease-out;
+        }
+
+        @keyframes fadeInBox {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes blink {
+            to {
+                visibility: hidden;
+            }
+        }
+
+        /* // --- RESPONSIVE DESIGN (FOR MOBILE) --- // */
         @media (max-width: 600px) {
             h1 {
                 font-size: 1.8rem;
@@ -126,21 +149,18 @@
                 text-align: center;
             }
         }
-        .big-emoji {
-            font-size: 3.5rem;
-            margin-right: 15px;
-            user-select: none; 
-            transition: transform 0.2s ease;
-            cursor: help;
-        }
     </style>
 </head>
 <body>
 
     <div class="main-container">
         <div class="content-box">
+
             <h1>wimbo.nl<span class="cursor"></span></h1>
-            <p><span class="big-emoji" id="emoji-container"></span></p>
+
+            <div class="big-emoji-container">
+                <span class="big-emoji" id="emoji-container"></span>
+            </div>
             
             <div class="text-links">
                 <p><a href="https://www.linkedin.com/in/wimb0/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
@@ -149,24 +169,35 @@
 
         </div>
     </div>
+
     <script>
-        const emojis = ['⚙️', '🚀', '💻', '💡', '🔧', '😎', '☠️', '👻', '🤖', '📡', '🧪', '🌵', '👾', '🙂', '🐈', '🌶️'];
+        // List of emojis to cycle through
+        const emojis = ['⚙️', '🚀', '💻', '💡', '🔧', '😎', '☠️', '👻', '🤖', '📡', '🧪', '🌵', '👾', '🙂', '🐈', '🌶️', '🍺', '🦖', '☕', '🚵‍♂️', '🍕','🤢'];
+        
+        // Get the HTML element where the emoji will be displayed
         const emojiContainer = document.getElementById('emoji-container');
     
+        // Function to pick and display a new random emoji
         function setNewRandomEmoji() {
             const currentEmoji = emojiContainer.textContent;
             let newEmoji;
     
+            // Loop to ensure the new emoji is different from the current one
             do {
                 const randomIndex = Math.floor(Math.random() * emojis.length);
                 newEmoji = emojis[randomIndex];
             } while (newEmoji === currentEmoji && emojis.length > 1);
     
+            // Set the new emoji as the content of the element
             emojiContainer.textContent = newEmoji;
         }
     
+        // Add an event listener: when the emoji is clicked, run the function
         emojiContainer.addEventListener('click', setNewRandomEmoji);
+        
+        // Run the function once on page load to show the first emoji
         setNewRandomEmoji();
     </script>
+
 </body>
 </html>
