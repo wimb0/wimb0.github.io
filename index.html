@@ -182,6 +182,7 @@
             <div class="text-links">
                 <p><a href="https://www.linkedin.com/in/wimb0/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
                 <p><a href="https://github.com/wimb0/" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+                <p><a href="https://buymeacoffee.com/wimbo" target="_blank" rel="noopener noreferrer">Buy Me a Coffee</a></p>
             </div>
 
         </div>
@@ -230,27 +231,27 @@
         setNewRandomEmoji();
 
 
-        // --- 3D Tilt Effect --- //
+        // --- CORRECTED 3D Tilt Effect --- //
         const contentBox = document.querySelector('.content-box');
 
         contentBox.addEventListener('mousemove', (e) => {
-            const { clientX, clientY, currentTarget } = e;
-            const { clientWidth, clientHeight, offsetLeft, offsetTop } = currentTarget;
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = e.clientX - rect.left; // Muis x-positie binnen het element
+            const y = e.clientY - rect.top;  // Muis y-positie binnen het element
 
-            const x = clientX - offsetLeft;
-            const y = clientY - offsetTop;
-            
-            const centerX = clientWidth / 2;
-            const centerY = clientHeight / 2;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
 
-            const rotateX = (y - centerY) / 20; // Gevoeligheid aanpassen
-            const rotateY = (centerX - x) / 20; // Gevoeligheid aanpassen
+            const rotateX = (y - centerY) / 25; // Gevoeligheid aanpassen
+            const rotateY = (centerX - x) / 25; // Gevoeligheid aanpassen
 
-            currentTarget.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            // Pas de rotatie toe, met behoud van de eindstaat van de animatie
+            e.currentTarget.style.transform = `translateY(0px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
 
         contentBox.addEventListener('mouseleave', (e) => {
-            e.currentTarget.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            // Reset naar de originele staat
+            e.currentTarget.style.transform = 'translateY(0px) rotateX(0deg) rotateY(0deg)';
         });
     </script>
 
