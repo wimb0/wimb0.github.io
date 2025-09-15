@@ -35,6 +35,7 @@
             justify-content: center;
             height: 100%;
             padding: 20px;
+            perspective: 1000px; /* Nodig voor 3D effect */
         }
 
         .content-box {
@@ -48,6 +49,8 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px); /* For Safari */
+            transform-style: preserve-3d; /* Nodig voor 3D effect */
+            transition: transform 0.1s ease-out; /* Vloeiende overgang voor tilt */
         }
 
         /* // --- TYPOGRAPHY & TEXT ELEMENTS --- // */
@@ -111,6 +114,20 @@
             animation: blink 1s steps(2, start) infinite;
         }
 
+        /* // --- FOOTER --- // */
+        .footer-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 0;
+            background-color: var(--background-start);
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--accent-border);
+        }
+
         /* // --- ANIMATIONS --- // */
         .content-box {
             opacity: 0;
@@ -170,6 +187,10 @@
         </div>
     </div>
 
+    <footer class="footer-bar">
+        Dankjewel
+    </footer>
+
     <script>
         // --- Typing Effect --- //
         const typingElement = document.getElementById('typing-effect');
@@ -184,9 +205,8 @@
             }
         }
 
-        // Start het type-effect kort na het laden van de pagina
         document.addEventListener('DOMContentLoaded', (event) => {
-            setTimeout(typeWriter, 500); // Wacht 0.5s voordat het typen begint
+            setTimeout(typeWriter, 500);
         });
 
 
@@ -208,6 +228,30 @@
     
         emojiContainer.addEventListener('click', setNewRandomEmoji);
         setNewRandomEmoji();
+
+
+        // --- 3D Tilt Effect --- //
+        const contentBox = document.querySelector('.content-box');
+
+        contentBox.addEventListener('mousemove', (e) => {
+            const { clientX, clientY, currentTarget } = e;
+            const { clientWidth, clientHeight, offsetLeft, offsetTop } = currentTarget;
+
+            const x = clientX - offsetLeft;
+            const y = clientY - offsetTop;
+            
+            const centerX = clientWidth / 2;
+            const centerY = clientHeight / 2;
+
+            const rotateX = (y - centerY) / 20; // Gevoeligheid aanpassen
+            const rotateY = (centerX - x) / 20; // Gevoeligheid aanpassen
+
+            currentTarget.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        contentBox.addEventListener('mouseleave', (e) => {
+            e.currentTarget.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        });
     </script>
 
 </body>
