@@ -156,7 +156,7 @@
     <div class="main-container">
         <div class="content-box">
 
-            <h1>wimbo.nl<span class="cursor"></span></h1>
+            <h1><span id="typing-effect"></span><span class="cursor"></span></h1>
 
             <div class="big-emoji-container">
                 <span class="big-emoji" id="emoji-container"></span>
@@ -171,31 +171,42 @@
     </div>
 
     <script>
-        // List of emojis to cycle through
+        // --- Typing Effect --- //
+        const typingElement = document.getElementById('typing-effect');
+        const textToType = "wimbo.nl";
+        let i = 0;
+
+        function typeWriter() {
+            if (i < textToType.length) {
+                typingElement.innerHTML += textToType.charAt(i);
+                i++;
+                setTimeout(typeWriter, 150); // Snelheid van typen (in ms)
+            }
+        }
+
+        // Start het type-effect kort na het laden van de pagina
+        document.addEventListener('DOMContentLoaded', (event) => {
+            setTimeout(typeWriter, 500); // Wacht 0.5s voordat het typen begint
+        });
+
+
+        // --- Emoji Cycle --- //
         const emojis = ['⚙️', '🚀', '💻', '💡', '🔧', '😎', '☠️', '👻', '🤖', '📡', '🧪', '🌵', '👾', '🙂', '🐈', '🌶️', '🍺', '🦖', '☕', '🚵‍♂️', '🍕','🤢'];
-        
-        // Get the HTML element where the emoji will be displayed
         const emojiContainer = document.getElementById('emoji-container');
     
-        // Function to pick and display a new random emoji
         function setNewRandomEmoji() {
             const currentEmoji = emojiContainer.textContent;
             let newEmoji;
     
-            // Loop to ensure the new emoji is different from the current one
             do {
                 const randomIndex = Math.floor(Math.random() * emojis.length);
                 newEmoji = emojis[randomIndex];
             } while (newEmoji === currentEmoji && emojis.length > 1);
     
-            // Set the new emoji as the content of the element
             emojiContainer.textContent = newEmoji;
         }
     
-        // Add an event listener: when the emoji is clicked, run the function
         emojiContainer.addEventListener('click', setNewRandomEmoji);
-        
-        // Run the function once on page load to show the first emoji
         setNewRandomEmoji();
     </script>
 
