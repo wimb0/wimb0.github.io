@@ -35,7 +35,6 @@
             justify-content: center;
             height: 100%;
             padding: 20px;
-            perspective: 1000px; /* Nodig voor 3D effect */
         }
 
         .content-box {
@@ -49,8 +48,6 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px); /* For Safari */
-            transform-style: preserve-3d; /* Nodig voor 3D effect */
-            transition: transform 0.1s ease-out; /* Vloeiende overgang voor tilt */
         }
 
         /* // --- TYPOGRAPHY & TEXT ELEMENTS --- // */
@@ -229,30 +226,6 @@
     
         emojiContainer.addEventListener('click', setNewRandomEmoji);
         setNewRandomEmoji();
-
-
-        // --- CORRECTED 3D Tilt Effect --- //
-        const contentBox = document.querySelector('.content-box');
-
-        contentBox.addEventListener('mousemove', (e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const x = e.clientX - rect.left; // Muis x-positie binnen het element
-            const y = e.clientY - rect.top;  // Muis y-positie binnen het element
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = (y - centerY) / 25; // Gevoeligheid aanpassen
-            const rotateY = (centerX - x) / 25; // Gevoeligheid aanpassen
-
-            // Pas de rotatie toe, met behoud van de eindstaat van de animatie
-            e.currentTarget.style.transform = `translateY(0px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        });
-
-        contentBox.addEventListener('mouseleave', (e) => {
-            // Reset naar de originele staat
-            e.currentTarget.style.transform = 'translateY(0px) rotateX(0deg) rotateY(0deg)';
-        });
     </script>
 
 </body>
