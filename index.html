@@ -131,27 +131,6 @@
             // --- Automatic Year in Footer --- //
             document.getElementById('year').textContent = new Date().getFullYear();
 
-            // --- CORRECTED: 3D Tilt Effect on Content Box --- //
-            // This code is now inside DOMContentLoaded to ensure the element exists.
-            const contentBox = document.getElementById('content-box');
-            if (contentBox) { // Check if the element is found
-                contentBox.addEventListener('mousemove', (e) => {
-                    const { left, top, width, height } = contentBox.getBoundingClientRect();
-                    const x = e.clientX - left - width / 2;
-                    const y = e.clientY - top - height / 2;
-
-                    const rotateX = (y / height) * -4; // Increased effect slightly
-                    const rotateY = (x / width) * 6;   // Increased effect slightly
-
-                    // Apply the final transform state of the animation along with the tilt
-                    contentBox.style.transform = `translateY(0px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                });
-
-                contentBox.addEventListener('mouseleave', () => {
-                    // Reset to the final animation state
-                    contentBox.style.transform = 'translateY(0px) rotateX(0deg) rotateY(0deg)';
-                });
-            }
         });
 
         // --- Emoji Cycle (can stay outside, as it has no dependencies) --- //
