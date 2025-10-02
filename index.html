@@ -13,6 +13,9 @@
         :root {
             --background-start: #0D1117;
             --background-end: #161B22;
+            --gradient-start: #1a2a6c;
+            --gradient-mid: #b21f1f;
+            --gradient-end: #fdbb2d;
             --text-primary: #E6EDF3;
             --text-secondary: #AABAC8;
             --accent-border: rgba(255, 255, 255, 0.1);
@@ -25,8 +28,11 @@
             margin: 0;
             font-family: 'Courier New', Courier, monospace;
             color: var(--text-primary);
-            background: linear-gradient(135deg, var(--background-start), var(--background-end));
             overflow: hidden;
+            /* NEW: Animated Gradient Background */
+            background: linear-gradient(-45deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end), var(--background-end));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
         }
 
         .main-container {
@@ -35,8 +41,11 @@
             justify-content: center;
             height: 100%;
             padding: 20px;
+            /* NEW: Add perspective for 3D effect */
+            perspective: 1000px;
         }
-
+        
+        /* UPDATED: Added transition for the new 3D tilt effect */
         .content-box {
             text-align: center;
             padding: 50px;
@@ -47,7 +56,11 @@
             border-radius: 12px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px); /* For Safari */
+            -webkit-backdrop-filter: blur(10px);
+            opacity: 0;
+            animation: fadeInBox 1s 0.2s forwards ease-out;
+            /* NEW: Transition for smooth tilt effect */
+            transition: transform 0.1s ease-out;
         }
 
         /* // --- TYPOGRAPHY & TEXT ELEMENTS --- // */
@@ -64,129 +77,102 @@
             color: var(--text-secondary);
             margin: 10px 0 0 0;
         }
-
-        .text-links {
+        
+        /* NEW: Styles for the new icon links */
+        .icon-links {
             margin-top: 30px;
-            display: inline-block; /* Adjust box to content width */
-            text-align: left;
+            display: flex;
+            justify-content: center;
+            gap: 25px; /* Ruimte tussen de iconen */
+        }
+
+        .icon-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .icon-links a:hover {
+            color: var(--text-primary);
+            transform: scale(1.1);
         }
         
-        .text-links p {
-            margin: 5px 0;
-        }
-
-        .text-links a {
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: text-decoration 0.3s ease;
-        }
-
-        .text-links a:hover {
-            text-decoration: underline;
+        .icon-links svg {
+            width: 28px;
+            height: 28px;
         }
 
         /* // --- INTERACTIVE & DYNAMIC ELEMENTS --- // */
-        .big-emoji-container {
-            margin: 20px 0;
-        }
-
+        .big-emoji-container { margin: 20px 0; }
         .big-emoji {
-            font-size: 3.5rem;
-            cursor: help; /* Cursor style on hover */
-            user-select: none; /* Prevents text selection */
+            font-size: 3.5rem; cursor: help; user-select: none;
             transition: transform 0.2s ease;
         }
-
-        .big-emoji:hover {
-            transform: scale(1.15); /* Slightly larger zoom on hover */
-        }
-
+        .big-emoji:hover { transform: scale(1.15); }
         .cursor {
-            display: inline-block;
-            width: 2px;
-            height: 2.2rem;
-            background-color: var(--text-primary);
-            margin-left: 8px;
-            vertical-align: middle;
-            animation: blink 1s steps(2, start) infinite;
+            display: inline-block; width: 2px; height: 2.2rem;
+            background-color: var(--text-primary); margin-left: 8px;
+            vertical-align: middle; animation: blink 1s steps(2, start) infinite;
         }
 
         /* // --- FOOTER --- // */
         .footer-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 10px 0;
-            background-color: var(--background-start);
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            padding: 10px 0; background-color: var(--background-start);
+            text-align: center; font-size: 0.9rem; color: var(--text-secondary);
             border-top: 1px solid var(--accent-border);
         }
 
         /* // --- ANIMATIONS --- // */
-        .content-box {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInBox 1s 0.2s forwards ease-out;
-        }
-
         @keyframes fadeInBox {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes blink {
-            to {
-                visibility: hidden;
-            }
+            to { visibility: hidden; }
+        }
+        /* NEW: Animation keyframes for the background */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* // --- RESPONSIVE DESIGN (FOR MOBILE) --- // */
         @media (max-width: 600px) {
-            h1 {
-                font-size: 1.8rem;
-            }
-            .cursor {
-                height: 1.6rem;
-            }
-            p {
-                font-size: 1rem;
-            }
-            .content-box {
-                padding: 30px;
-            }
-            .text-links {
-                text-align: center;
-            }
+            h1 { font-size: 1.8rem; }
+            .cursor { height: 1.6rem; }
+            p { font-size: 1rem; }
+            .content-box { padding: 30px; }
+            .icon-links { gap: 20px; }
+            .icon-links svg { width: 24px; height: 24px; }
         }
     </style>
 </head>
 <body>
 
     <div class="main-container">
-        <div class="content-box">
-
+        <div class="content-box" id="content-box">
             <h1><span id="typing-effect"></span><span class="cursor"></span></h1>
-
             <div class="big-emoji-container">
                 <span class="big-emoji" id="emoji-container"></span>
             </div>
             
-            <div class="text-links">
-                <p><a href="https://www.linkedin.com/in/wimb0/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
-                <p><a href="https://github.com/wimb0/" target="_blank" rel="noopener noreferrer">GitHub</a></p>
-                <p><a href="https://buymeacoffee.com/wimbo" target="_blank" rel="noopener noreferrer">Buy Me a Coffee</a></p>
+            <div class="icon-links">
+                <a href="https://www.linkedin.com/in/wimb0/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" role="img"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.25 6.5 1.75 1.75 0 016.5 8.25zM19 19h-3v-4.75c0-1.4-1.2-2.5-2.5-2.5S11 12.85 11 14.25V19h-3v-9h2.9v1.35c.4-.75 1.5-1.6 2.8-1.6 3.1 0 4.2 2.1 4.2 4.9V19z"></path></svg>
+                </a>
+                <a href="https://github.com/wimb0/" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" role="img"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297 24 5.67 18.627.297 12 .297z"></path></svg>
+                </a>
+                <a href="https://buymeacoffee.com/wimbo" target="_blank" rel="noopener noreferrer" title="Buy Me a Coffee">
+                   <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24" fill="currentColor" role="img"><path d="M22,8.5h-1c-0.2-1-0.6-1.9-1.2-2.7c0.6-0.3,1-0.9,1.1-1.6c0.1-0.8-0.5-1.6-1.4-1.6c-0.1,0-0.2,0-0.3,0.1C18.4,2,17.5,1.5,16.4,1.2C15.6,1,14.8,1,14.1,1.1c-1.2,0.2-2.2,0.9-2.9,1.9C10.6,3.6,10,4.2,9.5,4.9c-1.4,2-2.5,4.3-2.5,7c0,3,1.2,5.8,3.2,7.8C11.5,21.1,13.2,22,15,22h1c0.4,0,0.8-0.2,1.1-0.4c0.8-0.7,1.3-1.6,1.4-2.6h2.1c1.9,0,3.4-1.5,3.4-3.4v-4C24,9.6,23.1,8.6,22,8.5z M22,15.6c0,0.8-0.6,1.4-1.4,1.4h-2.1c-0.1,1.8-0.9,3.4-2.3,4.5c-0.2,0.1-0.3,0.2-0.5,0.2c-1.4,0-2.8-0.7-4-1.8c-1.6-1.6-2.6-3.8-2.6-6c0-2.3,1-4.3,2.2-6.1C9.4,7,10,6.4,10.6,5.8c0.8-1.2,2-2.1,3.5-2.3C14.6,3.4,15.1,3.5,16,3.8c1,0.3,1.8,0.9,2.4,1.8c0.5,0.8,0.9,1.6,1.1,2.5H10c-1.9,0-3.4,1.5-3.4,3.4v4c0,0.8,0.6,1.4,1.4,1.4h12.1c0.8,0,1.4-0.6,1.4-1.4V15.6z"></path></svg>
+                </a>
             </div>
-
         </div>
     </div>
 
     <footer class="footer-bar">
-        ©2025 wimbo.nl
+        ©<span id="year"></span> wimbo.nl
     </footer>
 
     <script>
@@ -194,38 +180,51 @@
         const typingElement = document.getElementById('typing-effect');
         const textToType = "wimbo.nl";
         let i = 0;
-
         function typeWriter() {
             if (i < textToType.length) {
                 typingElement.innerHTML += textToType.charAt(i);
                 i++;
-                setTimeout(typeWriter, 150); // Snelheid van typen (in ms)
+                setTimeout(typeWriter, 150);
             }
         }
-
-        document.addEventListener('DOMContentLoaded', (event) => {
+        document.addEventListener('DOMContentLoaded', () => {
             setTimeout(typeWriter, 500);
         });
-
 
         // --- Emoji Cycle --- //
         const emojis = ['⚙️', '🚀', '💻', '💡', '🔧', '😎', '☠️', '👻', '🤖', '📡', '🧪', '🌵', '👾', '🙂', '🐈', '🌶️', '🍺', '🦖', '☕', '🚵‍♂️', '🍕','🤢'];
         const emojiContainer = document.getElementById('emoji-container');
-    
         function setNewRandomEmoji() {
             const currentEmoji = emojiContainer.textContent;
             let newEmoji;
-    
             do {
                 const randomIndex = Math.floor(Math.random() * emojis.length);
                 newEmoji = emojis[randomIndex];
             } while (newEmoji === currentEmoji && emojis.length > 1);
-    
             emojiContainer.textContent = newEmoji;
         }
-    
         emojiContainer.addEventListener('click', setNewRandomEmoji);
         setNewRandomEmoji();
+        
+        // --- NEW: Automatic Year in Footer --- //
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // --- NEW: 3D Tilt Effect on Content Box --- //
+        const contentBox = document.getElementById('content-box');
+        contentBox.addEventListener('mousemove', (e) => {
+            const { left, top, width, height } = contentBox.getBoundingClientRect();
+            const x = e.clientX - left - width / 2;
+            const y = e.clientY - top - height / 2;
+
+            const rotateX = (y / height) * -3; // Max rotation 3 degrees
+            const rotateY = (x / width) * 5;   // Max rotation 5 degrees
+
+            contentBox.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        contentBox.addEventListener('mouseleave', () => {
+            contentBox.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        });
     </script>
 
 </body>
